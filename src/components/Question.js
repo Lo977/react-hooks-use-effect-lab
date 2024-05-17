@@ -3,17 +3,19 @@ import React, { useState, useEffect } from "react";
 function Question({ question, onAnswered }) {
   const [timeRemaining, setTimeRemaining] = useState(10);
 
+  // add useEffect code
   useEffect(() => {
     let timer;
     if (timeRemaining > 0) {
       timer = setInterval(() => {
-        setTimeRemaining(timeRemaining - 1);
+        setTimeRemaining((t) => t - 1);
       }, 1000);
     } else {
-      onAnswered(false);
+      return onAnswered(false);
     }
-    return function cleanUpInterval() {
-      clearInterval(timer);
+
+    return function cleanUp() {
+      clearTimeout(timer);
     };
   }, [timeRemaining, onAnswered]);
 
